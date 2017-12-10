@@ -8,4 +8,4 @@
 ```bash
     sudo yum install libcairo2-dev libjpeg-dev libgif-dev
 ```
-> Did not test if Windows environments need any additional dependencies
+> Did not test if Windows/MacOS environments need any additional dependencies
