@@ -54,3 +54,4 @@ node_modules/
 
 # Images created by example files
 examples/*.png
+*.png
