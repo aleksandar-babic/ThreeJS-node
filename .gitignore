@@ -48,3 +48,9 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Node modules
+node_modules/
+
+# Images created by example files
+examples/*.png
