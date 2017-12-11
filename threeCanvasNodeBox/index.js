@@ -4,6 +4,7 @@ require("./CanvasRenderer.js"); // CanvasRenderer isn't anymore in three package
 require("./Projector.js"); // CanvasRenderer needs this dependency
 
 const fs = require('fs');
+const path = require('path');
 const Canvas = require('canvas');
 
 module.exports = class ThreeCanvasNodeBox {
@@ -78,15 +79,16 @@ module.exports = class ThreeCanvasNodeBox {
      */
     saveStream(options) {
         return new Promise((resolve, reject) => {
+            const publicDir = path.join(__dirname, '..', 'api', 'public');
             //Make public dir if it does not exist
-            if (!fs.existsSync('public')) {
-                fs.mkdirSync('public');
+            if (!fs.existsSync(publicDir)) {
+                fs.mkdirSync(publicDir);
             }
 
             //Add file extension if not specified
             const fileName = helperGetFileExtension(options.fileName) === 'png' ? options.fileName : `${options.fileName}.png`;
             //Open write stream for image
-            const out = fs.createWriteStream(`public/${fileName}`);
+            const out = fs.createWriteStream(`${publicDir}/${fileName}`);
             const canvasStream = this.canvas.pngStream();
             canvasStream.on('data', (chunk) => out.write(chunk)); //Write chunk per chunk to png file
             canvasStream.on('end', () => resolve(

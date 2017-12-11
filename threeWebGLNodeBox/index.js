@@ -4,6 +4,7 @@ global.THREE = require("three"); // Make three module global so others can exten
 const fs = require('fs');
 const Canvas = require('canvas');
 const pngStream = require('three-png-stream');
+const path = require('path');
 const gl = require('gl')(64, 64, {preserveDrawingBuffer: true}); //Headless GL
 
 module.exports = class ThreeWebGLNodeBox {
@@ -78,15 +79,16 @@ module.exports = class ThreeWebGLNodeBox {
      */
     saveStream(options) {
         return new Promise((resolve, reject) => {
+            const publicDir = path.join(__dirname, '..', 'api', 'public');
             //Make public dir if it does not exist
-            if (!fs.existsSync('public')) {
-                fs.mkdirSync('public');
+            if (!fs.existsSync(publicDir)) {
+                fs.mkdirSync(publicDir);
             }
 
             //Add file extension if not specified
             const fileName = helperGetFileExtension(options.fileName) === 'png' ? options.fileName : `${options.fileName}.png`;
             //Open write stream for image
-            const out = fs.createWriteStream(`public/${fileName}`);
+            const out = fs.createWriteStream(`${publicDir}/${fileName}`);
             //Pipe png stream to png file
             pngStream(this.renderer, this.target).pipe(out);
 

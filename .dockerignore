@@ -1,0 +1,4 @@
+node_modules
+api/public
+examples/public
+npm-debug.log
