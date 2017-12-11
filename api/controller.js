@@ -1,6 +1,6 @@
 "use strict";
 const threeNodeCanvas = require('../threeCanvasNodeBox');
-const threeNodeWebGL = require('../threeWebGLNodeBox');
+const ThreeNodeWebGL = require('../threeWebGLNodeBox');
 
 /***
  * Handles request sent by HTTP, validates data
@@ -36,8 +36,8 @@ module.exports.handleRequest = (req,res) => {
  */
 function renderFromRequest(boxes, fileName, renderer, w=1920 , h=1080) {
         if(renderer === 'webgl'){
-            threeNodeWebGL.setBoxes(boxes);
-            return threeNodeWebGL.renderToFile({
+            const renderedObj = new ThreeNodeWebGL(boxes,w,h);
+            return renderedObj.renderToFile({
                 fileName: fileName,
                 w: w,
                 h: h

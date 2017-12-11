@@ -1,5 +1,5 @@
 "use strict";
-const threeNode = require('../threeWebGLNodeBox');
+const ThreeNode = require('../threeWebGLNodeBox');
 
 const box1 = {
     "pos": {"x": 1, "y": 1, "z": 1},
@@ -25,13 +25,11 @@ const box3 = {
     "color": 0x333388
 };
 
-threeNode.addBox(box1);
-threeNode.addBox(box2);
-threeNode.addBox(box3);
-threeNode.renderToFile({
-    fileName: 'webGlRenderedFile.png',
-    w: 1920,
-    h: 1080
+const boxes = [box1,box2,box3];
+
+const renderObj = new ThreeNode(boxes);
+renderObj.renderToFile({
+    fileName: 'webGlRenderedFile.png'
 })
     .then(data => console.log(data.message))
     .catch(error => console.log(error.message));
