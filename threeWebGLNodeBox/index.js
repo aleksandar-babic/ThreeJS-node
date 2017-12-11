@@ -16,7 +16,7 @@ module.exports = class ThreeWebGLNodeBox {
     }
 
     /**
-     * Helper method to add boxes to scene
+     * Helper method to add box to scene
      * @param boxParams
      */
     addBox2Scene(boxParams) {

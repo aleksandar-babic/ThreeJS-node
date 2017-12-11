@@ -1,5 +1,5 @@
 "use strict";
-const threeNodeCanvas = require('../threeCanvasNodeBox');
+const ThreeNodeCanvas = require('../threeCanvasNodeBox');
 const ThreeNodeWebGL = require('../threeWebGLNodeBox');
 
 /***
@@ -43,8 +43,8 @@ function renderFromRequest(boxes, fileName, renderer, w=1920 , h=1080) {
                 h: h
             });
         } else {
-            threeNodeCanvas.setBoxes(boxes);
-            return threeNodeCanvas.renderToFile({
+            const renderedObj = new ThreeNodeCanvas(boxes,w,h);
+            return renderedObj.renderToFile({
                 fileName: fileName,
                 w: w,
                 h: h
