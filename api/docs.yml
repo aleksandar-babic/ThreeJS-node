@@ -1,0 +1,145 @@
+swagger: '2.0'
+info:
+  description: Moves ThreeJS to server side, creates png file from ThreeJS scene.
+  version: 1.0.0
+  title: ThreeJS-Server
+
+# tags are used for organizing operations
+tags:
+- name: users
+  description: Endpoints allowed to unauthenticated users
+
+paths:
+  /generate:
+    post:
+      tags:
+      - users
+      summary: Generates png file from JSON parameters.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: boxJsonParameters
+        description: Required parameters for boxes, optional renderer(if not specified, webgl will be used as default), width(if not specified, 1920 will be used as default), height(if not specified, 1080 will be used as default), fileName(if not specified, linux timestamp will be used as default)
+        schema:
+          $ref: '#/definitions/InputObject'
+      responses:
+        200:
+          description: Image file successfully created
+          schema:
+            $ref: '#/definitions/SuccessObject'
+        400:
+          description: Bad request, invalid request parameters
+          schema:
+            $ref: '#/definitions/BadRequestObject'
+        500:
+          description: Error while creating image file
+          schema:
+            $ref: '#/definitions/ErrorObject'
+definitions:
+  SuccessObject:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Image has been written to public/myAwesomeScene.png
+      path:
+        type: string
+        example: public/myAwesomeScene.png
+  ErrorObject:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Error while writing image
+  BadRequestObject:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Boxes array is required and must not be empty.
+  InputObject:
+    type: object
+    required:
+      - boxes
+    properties:
+      boxes:
+        type: array
+        items:
+          $ref: '#/definitions/Box'
+      renderer:
+        description: If not specified, webgl will be used
+        type: string
+        example: canvas
+        default: webgl
+      fileName:
+        description: If not specified, Linux timestamp will be used
+        type: string
+        example: boxImage23
+      w:
+        description: If not specified, 1920 will be used
+        type: string
+        example: 800
+      h:
+        description: If not specified, 1080 will be used
+        type: string
+        example: 600
+  Box:
+    type: object
+    required:
+      - pos
+      - dim
+      - rot
+      - color
+      - name
+    properties:
+      pos:
+        type: object
+        properties:
+          x:
+            type: number
+            example: 1
+          y:
+            type: number
+            example: 2
+          z:
+            type: number
+            example: 3
+      dim:
+        type: object
+        properties:
+          l:
+            type: number
+            example: 1
+          w:
+            type: number
+            example: 2
+          h:
+            type: number
+            example: 3
+      rot:
+        type: object
+        properties:
+          x:
+            type: number
+            example: 1
+          y:
+            type: number
+            example: 2
+          z:
+            type: number
+            example: 3
+      color:
+        type: string
+        example: 0x333388
+      name:
+        type: string
+        example: My first box
+
+# Added by API Auto Mocking Plugin
+host: 127.0.0.1:8080
+basePath: /
+schemes:
+ - http

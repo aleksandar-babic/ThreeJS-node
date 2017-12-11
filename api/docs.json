@@ -1,0 +1,251 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Moves ThreeJS to server side, creates png file from ThreeJS scene.",
+    "version" : "1.0.0",
+    "title" : "ThreeJS-Server"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "users",
+    "description" : "Endpoints allowed to unauthenticated users"
+  } ],
+  "schemes" : ["http"],
+  "paths" : {
+    "/generate" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Generates png file from JSON parameters.",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "boxJsonParameters",
+          "description" : "Required parameters for boxes, optional renderer(if not specified, webgl will be used as default), width(if not specified, 1920 will be used as default), height(if not specified, 1080 will be used as default), fileName(if not specified, linux timestamp will be used as default)",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/InputObject"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Image file successfully created",
+            "schema" : {
+              "$ref" : "#/definitions/SuccessObject"
+            }
+          },
+          "400" : {
+            "description" : "Bad request, invalid request parameters",
+            "schema" : {
+              "$ref" : "#/definitions/BadRequestObject"
+            }
+          },
+          "500" : {
+            "description" : "Error while creating image file",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorObject"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "SuccessObject" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "Image has been written to public/myAwesomeScene.png"
+        },
+        "path" : {
+          "type" : "string",
+          "example" : "public/myAwesomeScene.png"
+        }
+      },
+      "example" : {
+        "path" : "public/myAwesomeScene.png",
+        "message" : "Image has been written to public/myAwesomeScene.png"
+      }
+    },
+    "ErrorObject" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "Error while writing image"
+        }
+      }
+    },
+    "BadRequestObject" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "Boxes array is required and must not be empty."
+        }
+      }
+    },
+    "InputObject" : {
+      "type" : "object",
+      "required" : [ "boxes" ],
+      "properties" : {
+        "boxes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Box"
+          }
+        },
+        "renderer" : {
+          "type" : "string",
+          "example" : "canvas",
+          "description" : "If not specified, webgl will be used",
+          "default" : "webgl"
+        },
+        "fileName" : {
+          "type" : "string",
+          "example" : "boxImage23",
+          "description" : "If not specified, Linux timestamp will be used"
+        },
+        "w" : {
+          "type" : "string",
+          "example" : "800",
+          "description" : "If not specified, 1920 will be used"
+        },
+        "h" : {
+          "type" : "string",
+          "example" : "600",
+          "description" : "If not specified, 1080 will be used"
+        }
+      },
+      "example" : {
+        "boxes" : [ {
+          "color" : "3355528",
+          "pos" : {
+            "x" : 1.0,
+            "y" : 2.0,
+            "z" : 3.0
+          },
+          "rot" : {
+            "x" : 1.0,
+            "y" : 2.0,
+            "z" : 3.0
+          },
+          "name" : "My first box",
+          "dim" : {
+            "w" : 2.0,
+            "h" : 3.0,
+            "l" : 1.0
+          }
+        }, {
+          "color" : "3355528",
+          "pos" : {
+            "x" : 1.0,
+            "y" : 2.0,
+            "z" : 3.0
+          },
+          "rot" : {
+            "x" : 1.0,
+            "y" : 2.0,
+            "z" : 3.0
+          },
+          "name" : "My first box",
+          "dim" : {
+            "w" : 2.0,
+            "h" : 3.0,
+            "l" : 1.0
+          }
+        } ],
+        "renderer" : "canvas",
+        "fileName" : "boxImage23",
+        "w" : "800",
+        "h" : "600"
+      }
+    },
+    "Box" : {
+      "type" : "object",
+      "required" : [ "color", "dim", "name", "pos", "rot" ],
+      "properties" : {
+        "pos" : {
+          "$ref" : "#/definitions/Box_pos"
+        },
+        "dim" : {
+          "$ref" : "#/definitions/Box_dim"
+        },
+        "rot" : {
+          "$ref" : "#/definitions/Box_pos"
+        },
+        "color" : {
+          "type" : "string",
+          "example" : "3355528"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "My first box"
+        }
+      },
+      "example" : {
+        "color" : "3355528",
+        "pos" : {
+          "x" : 1.0,
+          "y" : 2.0,
+          "z" : 3.0
+        },
+        "rot" : {
+          "x" : 1.0,
+          "y" : 2.0,
+          "z" : 3.0
+        },
+        "name" : "My first box",
+        "dim" : {
+          "w" : 2.0,
+          "h" : 3.0,
+          "l" : 1.0
+        }
+      }
+    },
+    "Box_pos" : {
+      "properties" : {
+        "x" : {
+          "type" : "number",
+          "example" : 1.0
+        },
+        "y" : {
+          "type" : "number",
+          "example" : 2.0
+        },
+        "z" : {
+          "type" : "number",
+          "example" : 3.0
+        }
+      },
+      "example" : {
+        "x" : 1.0,
+        "y" : 2.0,
+        "z" : 3.0
+      }
+    },
+    "Box_dim" : {
+      "properties" : {
+        "l" : {
+          "type" : "number",
+          "example" : 1.0
+        },
+        "w" : {
+          "type" : "number",
+          "example" : 2.0
+        },
+        "h" : {
+          "type" : "number",
+          "example" : 3.0
+        }
+      },
+      "example" : {
+        "w" : 2.0,
+        "h" : 3.0,
+        "l" : 1.0
+      }
+    }
+  }
+}

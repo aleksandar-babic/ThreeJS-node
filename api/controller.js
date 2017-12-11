@@ -10,7 +10,7 @@ const ThreeNodeWebGL = require('../threeWebGLNodeBox');
 module.exports.handleRequest = (req,res) => {
     //Respond with error if boxes array is not sent or is empty
     if(!req.body.boxes || req.body.boxes.length === 0){
-        return res.status(500).json({'message': 'Boxes array is required and must not be empty.'});
+        return res.status(400).json({'message': 'Boxes array is required and must not be empty.'});
     }
     //If renderer not specified default to webgl
     const renderer =
@@ -22,8 +22,8 @@ module.exports.handleRequest = (req,res) => {
         (req.body.fileName && req.body.fileName.match(re))?req.body.fileName:Date.now().toString();
 
     renderFromRequest(req.body.boxes, fileName, renderer, req.body.w, req.body.h)
-        .then(data => res.json(data))
-        .catch(err => res.json(err));
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json(err));
 };
 
 /***
