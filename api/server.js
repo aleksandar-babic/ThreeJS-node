@@ -1,7 +1,9 @@
+"use strict";
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const controller = require('./controller');
 const port = 8080;
@@ -10,6 +12,9 @@ const port = 8080;
 if(process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); //Apache style logs
 }
+
+//Setup static files directory
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //Setup body parser to support json
 app.use(bodyParser.json());

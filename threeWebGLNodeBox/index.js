@@ -9,7 +9,7 @@ const w = 1920;
 const h = 1080;
 const gl = require('gl')(64, 64, { preserveDrawingBuffer: true }); //Headless GL
 
-const boxes = []; // This array will keep all boxes
+let boxes = []; // This array will keep all boxes
 
 const scene = new THREE.Scene();
 
@@ -48,6 +48,8 @@ function helperGetFileExtension(filename) {
     return filename.slice((filename.lastIndexOf('.') - 1 >>> 0) + 2);
 }
 
+module.exports.setBoxes = (boxesNew) => {boxes=boxesNew; console.log(boxes.length)};
+
 module.exports.addBox = (box) => {
     boxes.push(box);
 };
@@ -78,14 +80,24 @@ module.exports.renderToFile = (options) => {
         const target = new THREE.WebGLRenderTarget(options.w || w, options.h || h);
         renderer.render(scene, camera, target);
 
+        //Make public dir if it does not exist
+        if (!fs.existsSync('public')){
+            fs.mkdirSync('public');
+        }
+
         //Add file extension if not specified
         const fileName = helperGetFileExtension(options.fileName) === 'png'?options.fileName:`${options.fileName}.png`;
         //Open write stream for image
-        const out = fs.createWriteStream(fileName);
+        const out = fs.createWriteStream(`public/${fileName}`);
         //Pipe png stream to png file
         pngStream(renderer, target).pipe(out);
 
-        out.on('close', () => resolve({message: `Image has been written to ${fileName}`}));
+        out.on('close', () => resolve(
+            {
+                message: `Image has been written to public/${fileName}`,
+                path: `public/${fileName}`
+            }
+                ));
 
     });
 };

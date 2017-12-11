@@ -55,3 +55,6 @@ node_modules/
 # Images created by example files
 examples/*.png
 *.png
+
+# Public Web API dir
+api/public/

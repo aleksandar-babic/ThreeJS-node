@@ -8,7 +8,7 @@ const Canvas = require('canvas');
 
 const w = 1920;
 const h = 1080;
-const boxes = []; // This array will keep all boxes
+let boxes = []; // This array will keep all boxes
 
 const scene = new THREE.Scene();
 
@@ -49,6 +49,8 @@ function helperGetFileExtension(filename) {
     return filename.slice((filename.lastIndexOf('.') - 1 >>> 0) + 2);
 }
 
+module.exports.setBoxes = (boxesNew) => { boxes=boxesNew; console.log(boxes.length)};
+
 module.exports.addBox = (box) => {
     boxes.push(box);
 };
@@ -73,13 +75,23 @@ module.exports.renderToFile = (options) => {
         renderer.setSize(options.w || w, options.h || h);
         renderer.render(scene, camera);
 
+        //Make public dir if it does not exist
+        if (!fs.existsSync('public')){
+            fs.mkdirSync('public');
+        }
+
         //Add file extension if not specified
         const fileName = helperGetFileExtension(options.fileName) === 'png'?options.fileName:`${options.fileName}.png`;
         //Open write stream for image
-        const out = fs.createWriteStream(fileName);
+        const out = fs.createWriteStream(`public/${fileName}`);
         const canvasStream = canvas.pngStream();
         canvasStream.on('data', (chunk) => out.write(chunk) ); //Write chunk per chunk to png file
-        canvasStream.on('end', () => resolve({message: `All chunks are written to file ${fileName}`}) );
+        canvasStream.on('end', () => resolve(
+            {
+                message: `Image has been written to public/${fileName}`,
+                path: `public/${fileName}`
+            }
+        ));
     });
 };
 

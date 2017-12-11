@@ -7,6 +7,7 @@ const expect = chai.expect;
 chai.should();
 
 describe ('ThreeWebGLNodeBox module', () => {
+    //TODO Implement tests
     it('should test params to addBox function');
     it('should test renderToFile function');
     it('should test helper function for file extension recognition');
