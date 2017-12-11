@@ -77,7 +77,7 @@ module.exports = class ThreeCanvasNodeBox {
      * @returns {Promise}
      */
     saveStream(options) {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             //Make public dir if it does not exist
             if (!fs.existsSync('public')) {
                 fs.mkdirSync('public');
@@ -109,25 +109,26 @@ module.exports = class ThreeCanvasNodeBox {
      * @returns {Promise}
      */
     renderToFile(options) {
-            if (!options || !options.fileName)
-                return Promise.reject({message: 'Options object is required with required property fileName.'});
+        if (!options || !options.fileName)
+            return Promise.reject({message: 'Options object is required with required property fileName.'});
 
-            this.drawPackagingStep(3, true);
+        this.drawPackagingStep(3, true);
 
-            this.canvas = new Canvas(200, 200);
-            this.canvas.style = {}; // dummy shim to prevent errors during render.setSize
-            const renderer = new THREE.CanvasRenderer({
-                canvas: this.canvas,
-                alpha: true
-            });
+        this.canvas = new Canvas(200, 200);
+        this.canvas.style = {}; // dummy shim to prevent errors during render.setSize
 
-            const camera = new THREE.PerspectiveCamera(75, (options.w || this.w) / (options.h || this.h), 0.1, 1000);
-            camera.position.z = 5;
-            renderer.setClearColor(0xffffff, 0);
-            renderer.setSize(options.w || this.w, options.h || this.h);
-            renderer.render(this.scene, camera);
+        const camera = new THREE.PerspectiveCamera(75, (options.w || this.w) / (options.h || this.h), 0.1, 1000);
+        camera.position.z = 5;
 
-            return this.saveStream(options);
+        const renderer = new THREE.CanvasRenderer({
+            canvas: this.canvas,
+            alpha: true
+        });
+        renderer.setClearColor(0xffffff, 0);
+        renderer.setSize(options.w || this.w, options.h || this.h);
+        renderer.render(this.scene, camera);
+
+        return this.saveStream(options);
     };
 
 };

@@ -8,7 +8,7 @@ const gl = require('gl')(64, 64, {preserveDrawingBuffer: true}); //Headless GL
 
 module.exports = class ThreeWebGLNodeBox {
 
-    constructor(boxes,w = 1920,h = 1080) {
+    constructor(boxes, w = 1920, h = 1080) {
         this.w = w;
         this.h = h;
         this.boxes = boxes;
@@ -67,7 +67,7 @@ module.exports = class ThreeWebGLNodeBox {
      * Sets new boxes array
      * @param boxes
      */
-    setBoxes(boxes){
+    setBoxes(boxes) {
         this.boxes = boxes;
     }
 
@@ -77,7 +77,7 @@ module.exports = class ThreeWebGLNodeBox {
      * @returns {Promise}
      */
     saveStream(options) {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             //Make public dir if it does not exist
             if (!fs.existsSync('public')) {
                 fs.mkdirSync('public');
@@ -111,33 +111,33 @@ module.exports = class ThreeWebGLNodeBox {
      * @returns {Promise}
      */
     renderToFile(options) {
-            if (!options || !options.fileName)
-                return Promise.reject({message: 'Options object is required with required property fileName.'});
+        if (!options || !options.fileName)
+            return Promise.reject({message: 'Options object is required with required property fileName.'});
 
-            this.drawPackagingStep(3, true);
+        this.drawPackagingStep(3, true);
 
-            const canvas = new Canvas(200, 200);
-            canvas.style = {}; // dummy shim to prevent errors during render.setSize
-            canvas.addEventListener = () => {
-            };
+        const canvas = new Canvas(200, 200);
+        canvas.style = {}; // dummy shim to prevent errors during render.setSize
+        canvas.addEventListener = () => {
+        };
 
-            this.renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                width: this.w,
-                height: this.h,
-                canvas: canvas,
-                context: gl
-            });
+        this.target = new THREE.WebGLRenderTarget(options.w || this.w, options.h || this.h);
 
-            this.target = new THREE.WebGLRenderTarget(options.w || this.w, options.h || this.h);
+        const camera = new THREE.PerspectiveCamera(75, (options.w || this.w) / (options.h || this.h), 0.1, 1000);
+        camera.position.z = 5;
 
-            const camera = new THREE.PerspectiveCamera(75, (options.w || this.w) / (options.h || this.h), 0.1, 1000);
-            camera.position.z = 5;
-            this.renderer.setClearColor(0x000000, 1); //Set background to black
-            this.renderer.setSize(options.w || this.w, options.h || this.h);
-            this.renderer.render(this.scene, camera, this.target);
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            width: this.w,
+            height: this.h,
+            canvas: canvas,
+            context: gl
+        });
+        this.renderer.setClearColor(0x000000, 1); //Set background to black
+        this.renderer.setSize(options.w || this.w, options.h || this.h);
+        this.renderer.render(this.scene, camera, this.target);
 
-            return this.saveStream(options);
+        return this.saveStream(options);
     };
 
 };
