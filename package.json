@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "example-canvas": "node examples/exampleCanvasRenderer.js",
-    "example-webgl": "node examples/exampleWebGLRenderer.js"
+    "example-webgl": "node examples/exampleWebGLRenderer.js",
+    "start": "node api/server.js"
   },
   "repository": {
     "type": "git",
