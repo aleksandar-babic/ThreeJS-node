@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./docs.json');
 
 const controller = require('./controller');
-const port = 8081;
+const port = 8080;
 
 //Don't use morgan logging in test environment
 if(process.env.NODE_ENV !== 'test') {
