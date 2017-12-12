@@ -28,6 +28,7 @@
 ### How to run Web API using docker?
 ```bash
     # Assuming that you already have Docker and docker-compose installed
+    git clone https://bitbucket.org/brandtsolutions/threejs-server.git && cd threejs-server
     docker-compose up
 ```
 > Web API will be running on http://localhost:8080 , Docs are available at : http://localhost:8080/docs
