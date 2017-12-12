@@ -25,6 +25,11 @@ app.use(bodyParser.raw({type: 'application/json'}));
 //Setup route
 app.route('/generate').post(controller.handleRequest);
 
+
+//Change docs host to match host from environemnt variable
+swaggerDocument.host = (process.env.IP_ADDR)?
+    `${process.env.IP_ADDR}:${port}`:
+    `localhost:${port}`;
 //Setup docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
