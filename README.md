@@ -1,34 +1,14 @@
-### Important notes
-##### GNU/Linux distributions must have installed additional packages in order to get GL node module working.
-### How to for Debian based distros (including *buntu, Linux Mint, Elementary OS, etc.)
-```bash
-    sudo apt-get install -y libcairo2-dev libjpeg-dev libgif-dev libxi-dev build-essential mesa-common-dev
-```
-> Did not test if Windows/MacOS environments need any additional dependencies
+# What is this? 
 
-### How to run examples?
-```bash
-    git clone https://bitbucket.org/brandtsolutions/threejs-server.git && cd threejs-server
-    npm install
-    npm run example-canvas # Will run box example using CanvasRenderer
-    npm run example-webgl # Will run box example using WebGLRenderer
-```
-> Example output files will be in api/public directory.
+###### This project will allow you to run ThreeJS (cross-browser JavaScript library/API used to create and display animated 3D computer graphics in a web browser) in NodeJS environment without actual browser.
+-----
+##### Project contains following parts :
+* 2 custom modules - They allow ThreeJS to run in NodeJS, one module is using CanvasRenderer, other one is using WebGLRenderer.
+* Web API - Listens for requests on <ip>:8080/generate, renders scenes based on parameters on JSON object from request, writes PNG image with it and returns path to image.
+* Dockerfile, .docker-compose.yml - This project is completely dockerizable with persistent storage using Docker Volume.
+* Swagger - This project uses swagger to show all details about web api endpoints
+* Docs - Detailed MarkDown files explanining how to setup various environments.
+##### How to run it?
+Depending on way you want to run it (locally for development, using docker container or on remote server) you can choose appropriate .md file in docs/ directory and see easiest way to do it.
 
-### How to run Web API?
-```bash
-    # Assuming that you already have NodeJS and NPM installed
-    # Assuming that you already installed additional dependencies from above
-    git clone https://bitbucket.org/brandtsolutions/threejs-server.git && cd threejs-server
-    npm install
-    npm start
-```
-> Web API will be running on http://localhost:8080 , Docs are available at : http://localhost:8080/docs
-
-### How to run Web API using docker?
-```bash
-    # Assuming that you already have Docker and docker-compose installed
-    git clone https://bitbucket.org/brandtsolutions/threejs-server.git && cd threejs-server
-    docker-compose up
-```
-> Web API will be running on http://localhost:8080 , Docs are available at : http://localhost:8080/docs
+> Web API will be running by default on http://<your-ip-address>:8080 , swagger docs will be available at : http://<your-ip-address>:8080/docs
