@@ -10,6 +10,12 @@ If you are on Debian based linux distribution you will need additional dependenc
 sudo apt-get install -y libcairo2-dev libjpeg-dev libgif-dev libxi-dev build-essential mesa-common-dev
 ```
 
+For Windows install GTK+ 2.x (!) Runtime from: https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer
+Install Runtime at C:\GTK
+Follow node-canvas installation: https://github.com/Automattic/node-canvas/wiki/Installation---Windows
+-> more specifically get GTK 2.x (Win 64) bundle and copy to C:\GTK
+-> then do step to install libjpeg-turbo (e.g. libjpeg-turbo-1.5.1-vc64.exe to C:\libjpeg-turbo64 if 64bit)
+
 Once we have both node(with npm) and additional dependencies installed we can clone repository :
 ```bash
 git clone https://bitbucket.org/brandtsolutions/threejs-server.git && cd threejs-server
