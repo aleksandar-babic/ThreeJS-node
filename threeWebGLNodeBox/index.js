@@ -116,7 +116,7 @@ module.exports = class ThreeWebGLNodeBox {
         if (!options || !options.fileName)
             return Promise.reject({message: 'Options object is required with required property fileName.'});
 
-        this.drawPackagingStep(3, true);
+        this.drawPackagingStep(this.boxes.length, true);
 
         const canvas = new Canvas(200, 200);
         canvas.style = {}; // dummy shim to prevent errors during render.setSize

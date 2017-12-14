@@ -114,7 +114,7 @@ module.exports = class ThreeCanvasNodeBox {
         if (!options || !options.fileName)
             return Promise.reject({message: 'Options object is required with required property fileName.'});
 
-        this.drawPackagingStep(3, true);
+        this.drawPackagingStep(this.boxes.length, true);
 
         this.canvas = new Canvas(200, 200);
         this.canvas.style = {}; // dummy shim to prevent errors during render.setSize
