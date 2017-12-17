@@ -13,7 +13,7 @@ if (!process.env.PORT) {
   //Default to 8080 if no port specified
   process.env.PORT = 8080
 }
-const port = process.env.PORT;
+const port = process.env.PORT
 
 //Don't use morgan logging in test environment
 if (process.env.NODE_ENV !== 'test') {
