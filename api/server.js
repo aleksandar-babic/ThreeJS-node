@@ -15,7 +15,6 @@ if(process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); //Apache style logs
 }
 
-console.log(process.env.URL);
 
 //Setup static files directory
 app.use('/public', express.static(path.join(__dirname, 'public')));
