@@ -1,0 +1,13 @@
+{
+  "env": {
+    "NODE_ENV": "dev",
+    "IP_ADDR": "localhost",
+    "URL": "http://localhost/"
+  },
+  "ignore": [
+    "../.git",
+    "../node_modules/**/node_modules",
+    "docs.yml",
+    "docs.json"
+  ]
+}
