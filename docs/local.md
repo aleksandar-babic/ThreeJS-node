@@ -27,6 +27,17 @@ npm start
 ```
 > From this point you can extend project with new features and push it to this git repository.
 
+Project is using nodemon for file changes monitoring, nodemon.json file in api directory is setting all dev environment variables and ignores node_modules, docs and .git directories, to run with nodemon use :
+```bash
+cd project_directory/api
+
+# If you don't have nodemon globally installed
+../node_modules/nodemon/bin/nodemon.js server.js
+
+# If you have nodemon globally installed
+nodemon server.js
+```
+
 Test environment with Mocha test runner and chai(including http and as-promised) is already setup with dummy tests in test directory, to run Mocha use :
 ```bash
 npm test
