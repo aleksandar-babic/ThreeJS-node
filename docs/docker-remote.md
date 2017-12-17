@@ -39,12 +39,14 @@ docker push <your-docker-username>/name
 version: '3'
 services:
   api:
-    image: <your-docker-username>/name
+    image: dckhtbitsol/threejs-server
     ports:
       - "8080:8080"
     environment:
       - NODE_ENV=development
       - IP_ADDR=localhost
+      - PORT=8080
+      - URL=http://localhost
     volumes:
       - threejsData:/app/api/public
 volumes:
