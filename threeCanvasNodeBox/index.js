@@ -91,10 +91,12 @@ module.exports = class ThreeCanvasNodeBox {
             const out = fs.createWriteStream(`${publicDir}/${fileName}`);
             const canvasStream = this.canvas.pngStream();
             canvasStream.on('data', (chunk) => out.write(chunk)); //Write chunk per chunk to png file
+            //Prepare path string
+            const fullPath = (process.env.URL)?`${process.env.URL}:${process.env.PORT}/public/${fileName}`:`public/${fileName}`;
             canvasStream.on('end', () => resolve(
                 {
                     message: `Image has been written to public/${fileName}`,
-                    path: `public/${fileName}`
+                    path: fullPath
                 }
             ));
             canvasStream.on('error', () => reject(

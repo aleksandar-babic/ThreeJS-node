@@ -1,39 +1,40 @@
-"use strict";
-const express = require('express');
-const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const path = require('path');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./docs.json');
+'use strict'
+const express = require('express')
+const app = express()
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const path = require('path')
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./docs.json')
 
-const controller = require('./controller');
-const port = 8080;
+const controller = require('./controller')
+
+if (!process.env.PORT) {
+  //Default to 8080 if no port specified
+  process.env.PORT = 8080
+}
+const port = process.env.PORT;
 
 //Don't use morgan logging in test environment
-if(process.env.NODE_ENV !== 'test') {
-    app.use(morgan('combined')); //Apache style logs
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('combined')) //Apache style logs
 }
 
-
 //Setup static files directory
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')))
 
 //Setup body parser to support json
-app.use(bodyParser.json());
-app.use(bodyParser.raw({type: 'application/json'}));
+app.use(bodyParser.json())
+app.use(bodyParser.raw({type: 'application/json'}))
 
 //Setup route
-app.route('/generate').post(controller.handleRequest);
-
+app.route('/generate').post(controller.handleRequest)
 
 //Change docs host to match host from environemnt variable
-swaggerDocument.host = (process.env.IP_ADDR)?
-    `${process.env.IP_ADDR}:${port}`:
-    `localhost:${port}`;
+swaggerDocument.host = (process.env.IP_ADDR) ? `${process.env.IP_ADDR}:${port}` : `localhost:${port}`
 //Setup docs
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-app.listen(port, () => console.log(`Server is listening on port ${port}.`));
+app.listen(port, () => console.log(`Server is listening on port ${port}.`))
 
-module.exports = app;
+module.exports = app

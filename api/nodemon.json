@@ -2,7 +2,7 @@
   "env": {
     "NODE_ENV": "dev",
     "IP_ADDR": "localhost",
-    "URL": "http://localhost/"
+    "URL": "http://localhost"
   },
   "ignore": [
     "../.git",

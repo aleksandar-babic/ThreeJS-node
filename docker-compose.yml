@@ -7,6 +7,8 @@ services:
     environment:
       - NODE_ENV=development
       - IP_ADDR=localhost
+      - PORT=8080
+      - URL=http://example.com
     volumes:
       - threejsData:/app/api/public
 volumes:
