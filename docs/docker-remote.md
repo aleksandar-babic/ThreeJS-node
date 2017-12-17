@@ -79,11 +79,14 @@ services:
     environment:
       - NODE_ENV=development
       - IP_ADDR=localhost
+      - PORT=8080
+      - URL=http://localhost
     volumes:
       - threejsData:/app/api/public
 volumes:
   threejsData:
 ```
+
 > Note that we are using image pushed to dckhtbitsol/threejs-server
 * Download image, start our container :
 ```bash
@@ -94,3 +97,11 @@ docker-compose up -d
 docker container ps
 ```
 > Web API will be running on http://<your-ip-address>:8080 , Docs are available at : http://<your-ip-address>:8080/docs
+
+### Customizing docker-compose.yml file
+You can change/add following environment variables in this file :
+  * NODE_ENV=production (If environment is test api wont log any requests) 
+  * IP_ADDR=x.x.x.x (Change this to your IP address - this is used for swagger docs)
+  * PORT=8080 (Change this if you dont want to run on port 8080)
+  * URL=http://x.x.x.x (This will be host in api path response, should be same as IP_ADDR)
+> If you change PORT environment variable, you should change "8080:8080" in ports property as well

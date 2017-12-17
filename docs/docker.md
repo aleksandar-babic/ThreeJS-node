@@ -26,9 +26,17 @@ You will find 3 files related to docker there :
 * docker-compose.yml - YAML file that defines how Docker containers should behave in production, it allows us to make api/public directory (directory where all rendered images are saved) persistent so we can have all our data saved even if container is restared. What is important in it :
     * build: . - this tells it to use local Dockerfile to build image
     * ports: - this maps container port 8080 to host port 8080
-    * environment: - this will set environment variables we are using in project (change IP_ADDR to your computer IP, this is used only so swagger docs can use their built-in api tester from browser)
+    * environment: - this will set environment variables we are using in project (see below for more details)
     * volumes: - this will create volume threejsData if it does not already exist and map it to /app/api/public in container
 * .dockerignore - Similar to .gitignore this tells docker what files to ignore when building image
+
+### Customizing docker-compose.yml file
+You can change/add following environment variables in this file :
+  * NODE_ENV=production (If environment is test api wont log any requests) 
+  * IP_ADDR=x.x.x.x (Change this to your IP address - this is used for swagger docs)
+  * PORT=8080 (Change this if you dont want to run on port 8080)
+  * URL=http://x.x.x.x (This will be host in api path response, should be same as IP_ADDR)
+> If you change PORT environment variable, you should change "8080:8080" in ports property as well
 
 ### Building and starting container
 You can build and start container simply by writing :
@@ -40,4 +48,4 @@ You can verify container is running with :
 ```bash
 docker container ps
 ```
-> Web API will be running on http://<your-ip-address>:8080 , Docs are available at : http://<your-ip-address>:8080/docs
+> Web API will be by default running on http://<your-ip-address>:8080 , Docs are available at : http://<your-ip-address>:8080/docs , unless you changed port
